@@ -1,0 +1,32 @@
+app:
+  name: bim-resource-api
+  project_folder: src/Osram.Bim.Resource.Api/Osram.Bim.Resource.Api
+  solution_folder: src/Osram.Bim.Resource.Api
+  version: 1.0.0-alpha
+
+config:
+  root_folder: terraform_app
+  docker: src/Osram.Bim.Resource.Api/Osram.Bim.Resource.Api/Dockerfile
+  
+  helm:
+    name: bim-resource-api
+    folder: app-chart
+
+service:
+  db: db_url
+
+tests:
+  integration: qa/postman
+
+azure:
+  credentials: 
+    main: encelium-devops-terraform
+    acr: encelium-devops-acr
+  subscription: Pay-As-You-Go Dev/Test
+  aks:
+    resource_group: kubernetes-dev
+    resource_namespace: osram-markham-k8s-dev
+    dns_host_zone: 5ea7a1d2a99a4699b36b.eastus.aksapp.io
+  acr:
+    name: osrammarkhamdev
+    category: osram/markham/services

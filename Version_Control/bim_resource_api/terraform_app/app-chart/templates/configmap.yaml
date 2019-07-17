@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $.Values.appName | lower }}-servicesettings
+  namespace: {{ .Values.namespace | lower }}
+  labels:
+    app.kubernetes.io/name: {{ include "app-chart.name" . }}
+    helm.sh/chart: {{ include "app-chart.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}  
+data:
+  serviceSettings.json: |-
+      {
+        "consulSettings": {
+          "host": [ "http://consul-acl-server.consul-acl:8500" ],
+          "path": "{{ .Values.environment }}/bim_resource_api/appsettings.json",
+          "accessToken": "a5f6ee2c-ad5d-7b2a-a3e9-19a6cf85bf62",
+          "watchDelay": 10000
+        }
+      }
+
