@@ -98,8 +98,8 @@ namespace Osram.Bim.Resources.Api
                     new Info
                     {
                         Title = "BIM Resource Api",
-                        Version = _appVersion,
-                        Description = "OSRAM BIM Resource Api",
+                        Version = "v1.0",
+                        Description = "OSRAM BIM Resource Api. Assembly version: " + _appVersion,
                         TermsOfService = "None",
                         Contact = new Contact
                         {
@@ -172,7 +172,7 @@ namespace Osram.Bim.Resources.Api
 
             app.UseSwaggerUI(__options =>
             {
-                __options.SwaggerEndpoint($"../{__options.RoutePrefix}/v1/swagger.json", $"BIM Resource Api - {_appVersion}");
+                __options.SwaggerEndpoint($"../{__options.RoutePrefix}/v1/swagger.json", "BIM Resource Api v1.0");
 
             });
 
