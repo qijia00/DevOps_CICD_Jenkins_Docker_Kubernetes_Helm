@@ -1,0 +1,29 @@
+app:
+  name:  communication-address-api
+  project_folder: src/Osram.CommunicationAddress.Api/Osram.CommunicationAddress.Api
+  solution_folder: src/Osram.CommunicationAddress.Api
+  version: 1.0.0-alpha
+
+config:
+  root_folder: terraform_app
+  docker: src/Osram.CommunicationAddress.Api/Osram.CommunicationAddress.Api/Dockerfile
+  dockerimage: 172564481277.dkr.ecr.us-east-2.amazonaws.com/osram/markham/services/communication-address-api
+  
+  helm:
+    name: communication-address-api
+    folder: app-chart
+
+service:
+  db: db_url
+
+tests:
+  integration: qa/postman
+
+aws:
+  region: us-east-2
+  eks:
+    cluster_name: encelium-dev-apps
+    domain: enceliumapp.com
+  ecr:
+    secret: us-east-2-ecr-registry
+    # url: 172564481277.dkr.ecr.us-east-2.amazonaws.com/osram/markham/services/communication-address-api

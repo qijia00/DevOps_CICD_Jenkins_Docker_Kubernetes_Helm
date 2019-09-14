@@ -1,0 +1,1358 @@
+{
+	"info": {
+		"_postman_id": "537449a4-d79e-4cae-ba62-e56532f66bfa",
+		"name": "sanityCommunicationAddressoffsets",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST Organization",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "46a32ea9-5880-4e7a-88a7-7c92afbeb7fd",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code check\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"//Response body check - node section\r",
+							"pm.test(\"Response body check - node section\", function () {\r",
+							"    pm.expect(jsonData.name).to.eql(\"OrganizationName\");\r",
+							"    pm.expect(jsonData.createdBy).to.eql(\"root\");\r",
+							"    pm.expect(jsonData.id).to.not.eql(null);\r",
+							"    postman.setGlobalVariable(\"organizationId\", jsonData.id);\r",
+							"});\r",
+							"\r",
+							"//Output node Id\r",
+							"pm.test(\"Organization Id: \" + postman.getGlobalVariable(\"organizationId\"), function () {});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1b11b272-2664-4826-bd85-dc1283fbed27",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"name\": \"OrganizationName\"\r\n}"
+				},
+				"url": {
+					"raw": "{{http}}{{env}}{{urlConfig}}/v1/Organization",
+					"host": [
+						"{{http}}{{env}}{{urlConfig}}"
+					],
+					"path": [
+						"v1",
+						"Organization"
+					]
+				},
+				"description": "Creates an Organization."
+			},
+			"response": []
+		},
+		{
+			"name": "POST Organization Contains EncSystem",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "46a32ea9-5880-4e7a-88a7-7c92afbeb7fd",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code check\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"//Response body check - node section\r",
+							"pm.test(\"Response body check - node section\", function () {\r",
+							"    pm.expect(jsonData.nodeType).to.eql(\"EncSystem\");\r",
+							"    pm.expect(jsonData.name).to.eql(\"EncSystemName\");\r",
+							"    pm.expect(jsonData.createdBy).to.eql(\"root\");\r",
+							"    pm.expect(jsonData.id).to.not.eql(null);\r",
+							"    postman.setGlobalVariable(\"encSystemId\", jsonData.id);\r",
+							"});\r",
+							"\r",
+							"postman.setGlobalVariable(\"repeatTimes\", 0);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"nodeType\": \"EncSystem\",\r\n\t\"DBStatus\": \"new\",\r\n\t\"Enable3D\": true,\r\n\t\"Enable4hrExtensionTime\": false,\r\n\t\"FormatStrings\": {\r\n\t\t\"default\": \"%type% %refaddress%\",\r\n\t\t\"FixtureModel\": \"%type% %refaddress%\"\r\n\t},\r\n\t\"TimeZone\": {\r\n\t\t\"PolarisId\": \"TimeZone_Eastern_Standard_Time\",\r\n\t\t\"offsets\": -180000000000\r\n\t},\r\n\t\"Name\": \"EncSystemName\",\r\n\t\"Customer\": \"CustomerName\",\r\n\t\"Notes\": \"Additional Notes\",\r\n\t\"SiteAddress\": \"53 street st\",\r\n\t\"SiteLatitude\": \"43.8563\",\r\n\t\"SiteLongitude\": \"-79.37784\"\r\n}\r\n\r\n"
+				},
+				"url": {
+					"raw": "{{http}}{{env}}{{urlConfig}}/v1/organization/{{organizationId}}/EncSystem",
+					"host": [
+						"{{http}}{{env}}{{urlConfig}}"
+					],
+					"path": [
+						"v1",
+						"organization",
+						"{{organizationId}}",
+						"EncSystem"
+					]
+				},
+				"description": "Creates an EncSystem contains by the Organization."
+			},
+			"response": []
+		},
+		{
+			"name": "GET  /v1/offsets/{encSystemId}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "263550bb-9e36-4fa6-8d7e-6529b2b38c44",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code should be 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"//Response body check\r",
+							"pm.test(\"Response body check\", function () {\r",
+							"    pm.expect(jsonData.blockId).to.not.eql(null);\r",
+							"    postman.setGlobalVariable(\"blockId\", jsonData.blockId);\r",
+							"    pm.expect(jsonData.encSystemId).to.eql(postman.getGlobalVariable(\"encSystemId\"));\r",
+							"    pm.expect(jsonData.timeOfAssignment).to.not.eql(null);\r",
+							"    postman.setGlobalVariable(\"timeOfAssignment\", jsonData.timeOfAssignment);\r",
+							"    //pm.expect(jsonData.startingBlockAddress).to.be.not.below(256);\r",
+							"    pm.expect(jsonData.startingBlockAddress).to.equal(256);\r",
+							"    postman.setGlobalVariable(\"startingBlockAddress\", jsonData.startingBlockAddress);\r",
+							"    //pm.expect(jsonData.endingBlockAddress).to.be.not.above(65279);\r",
+							"    pm.expect(jsonData.endingBlockAddress).to.be.not.above(767);\r",
+							"    postman.setGlobalVariable(\"endingBlockAddress\", jsonData.endingBlockAddress);\r",
+							"    var offsetsRange = postman.getGlobalVariable(\"endingBlockAddress\")-postman.getGlobalVariable(\"startingBlockAddress\")+1;\r",
+							"    pm.expect(offsetsRange).to.eql(512);\r",
+							"    pm.expect(jsonData.nextFreeAddress).to.eql(parseInt(postman.getGlobalVariable(\"startingBlockAddress\"), 10));\r",
+							"    postman.setGlobalVariable(\"nextFreeAddress\", jsonData.nextFreeAddress);\r",
+							"    pm.expect(jsonData.freeAddressList.length).to.eql(0);\r",
+							"    pm.expect(jsonData.blockReassigned).to.eql(false);\r",
+							"    postman.setGlobalVariable(\"blockReassigned\", jsonData.blockReassigned);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{http}}{{env}}{{urlCommunicationAddress}}/v1/offsets/{{encSystemId}}",
+					"host": [
+						"{{http}}{{env}}{{urlCommunicationAddress}}"
+					],
+					"path": [
+						"v1",
+						"offsets",
+						"{{encSystemId}}"
+					]
+				},
+				"description": "1 encSystem has 127 offsets blocks\neach offsets block size is 512 (i.e., 0x200)\noffsets range from 256 (i.e., 0x100) to 65279 (i.e., 0xfeff)\n\nmeaning:\nthere can be up to 127 commissioning guys work on the same site, each person has a Polaris, each Polaris can request a block of offsets.\n\nEach Polaris can bring up to 512 ECU into site.\n\nNote:\nIf I have 2 encSystems. when I GET 1st time of encSystem1, I got 256 to 767, when I GET 2nd time of encSystem2, I also got 256 to 767, this is expected, offsetss only have to be unique within an enc system"
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH /v1/offsets/{encSystemId}/{blockId}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "263550bb-9e36-4fa6-8d7e-6529b2b38c44",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code should be 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"//console.log(jsonData);\r",
+							"//Response body check\r",
+							"pm.test(\"Response body check\", function () {\r",
+							"    pm.expect(jsonData.blockId).to.eql(postman.getGlobalVariable(\"blockId\"));\r",
+							"    pm.expect(jsonData.encSystemId).to.eql(postman.getGlobalVariable(\"encSystemId\"));\r",
+							"    pm.expect(jsonData.timeOfAssignment).to.not.eql(postman.getGlobalVariable(\"timeOfAssignment\"));\r",
+							"    pm.expect(jsonData.startingBlockAddress).to.eql(parseInt(postman.getGlobalVariable(\"startingBlockAddress\"), 10));\r",
+							"    pm.expect(jsonData.endingBlockAddress).to.eql(parseInt(postman.getGlobalVariable(\"endingBlockAddress\"), 10));\r",
+							"    pm.expect(jsonData.nextFreeAddress).to.eql(parseInt(postman.getGlobalVariable(\"nextFreeAddress\"), 10));\r",
+							"    pm.expect(jsonData.freeAddressList.length).to.eql(4);\r",
+							"    for (var i = 0; i < jsonData.freeAddressList.length; i++) {\r",
+							"        pm.expect(jsonData.freeAddressList[i]).to.eql(parseInt(postman.getGlobalVariable(\"freeAddress\" + i), 10));\r",
+							"    }\r",
+							"    pm.expect(jsonData.blockReassigned).to.eql(postman.getGlobalVariable(\"blockReassigned\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5ccfb2bc-a66f-4950-a54b-bd1c0ddebc84",
+						"exec": [
+							"postman.setGlobalVariable(\"nextFreeAddress\", parseInt(postman.getGlobalVariable(\"startingBlockAddress\"), 10) + 50);",
+							"postman.setGlobalVariable(\"freeAddress0\", parseInt(postman.getGlobalVariable(\"startingBlockAddress\"), 10) + 10);",
+							"postman.setGlobalVariable(\"freeAddress1\", parseInt(postman.getGlobalVariable(\"startingBlockAddress\"), 10) + 20);",
+							"postman.setGlobalVariable(\"freeAddress2\", parseInt(postman.getGlobalVariable(\"startingBlockAddress\"), 10) + 30);",
+							"postman.setGlobalVariable(\"freeAddress3\", parseInt(postman.getGlobalVariable(\"startingBlockAddress\"), 10) + 40);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"blockId\": \"{{blockId}}\",\r\n    \"encSystemId\": \"{{encSystemId}}\",\r\n    \"timeOfAssignment\": \"{{timeOfAssignment}}\",\r\n    \"startingBlockAddress\": {{startingBlockAddress}},\r\n    \"endingBlockAddress\": {{endingBlockAddress}},\r\n    \"nextFreeAddress\": {{nextFreeAddress}},\r\n    \"freeAddressList\": [{{freeAddress0}}, {{freeAddress1}}, {{freeAddress2}}, {{freeAddress3}}]\r\n}"
+				},
+				"url": {
+					"raw": "{{http}}{{env}}{{urlCommunicationAddress}}/v1/offsets/{{encSystemId}}/{{blockId}}",
+					"host": [
+						"{{http}}{{env}}{{urlCommunicationAddress}}"
+					],
+					"path": [
+						"v1",
+						"offsets",
+						"{{encSystemId}}",
+						"{{blockId}}"
+					]
+				},
+				"description": "Polaris has brought 50 ECUs into side, so offsets address from startingBlockAddress to startingBlockAddress + 50 was used, which is represented by nextFreeAddress = startingBlockAddress + 50.\n\nHowever, among these 50 ECUs, Polaris decided to unmap 4 of them, which had offsets address as StartingBlockAddress + 10, StartingBlockAddress + 20, StartingBlockAddress + 30, StartingBlockAddress + 40. So these 4 offsets becomes available and mentioned in freeAddressList.\n\nOnce Polaris done with bring ECU into site, it uses this patch command to update the cloud that within the block of offsetss that allocated for this Polaris instance, it has used up 46 offsetss, and the available one are from nextFreeAddress to endingBlackAddress, plus the 4 offsets addresses mentioned in freeAddressList.\n\nThis Polaris of couse thinks its block of offsets still belonges to itself, and the retun of the Patch file should say blockReassigned: false. However, in reality, if there were 128 commissioning guys in the same site, the # 128 commissioning guy will be allocated the same offsets block as it was given to # 1 comissioning guy, and if # 1 commissionning guy decided to use his Polaris instance to PATCH, he will receive blockReassigned: true back which acknowledge him that he lost the block of offsets that were assigned to him."
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH /v1/offsets/{encSystemId}/{blockId} Again NOT ALLOWED",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "263550bb-9e36-4fa6-8d7e-6529b2b38c44",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code should be 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"//Response body check\r",
+							"pm.test(\"Response body check\", function () {\r",
+							"    pm.expect(jsonData.blockId).to.eql(postman.getGlobalVariable(\"blockId\"));\r",
+							"    pm.expect(jsonData.encSystemId).to.eql(postman.getGlobalVariable(\"encSystemId\"));\r",
+							"    pm.expect(jsonData.timeOfAssignment).to.not.eql(postman.getGlobalVariable(\"timeOfAssignment\"));\r",
+							"    pm.expect(jsonData.startingBlockAddress).to.eql(0);\r",
+							"    pm.expect(jsonData.endingBlockAddress).to.eql(0);\r",
+							"    pm.expect(jsonData.nextFreeAddress).to.eql(0);\r",
+							"    pm.expect(jsonData.freeAddressList).to.eql(null);\r",
+							"    pm.expect(jsonData.blockReassigned).to.eql(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5ccfb2bc-a66f-4950-a54b-bd1c0ddebc84",
+						"exec": [
+							"postman.setGlobalVariable(\"nextFreeAddress\", parseInt(postman.getGlobalVariable(\"startingBlockAddress\"), 10) + 50);",
+							"postman.setGlobalVariable(\"freeAddress0\", parseInt(postman.getGlobalVariable(\"startingBlockAddress\"), 10) + 10);",
+							"postman.setGlobalVariable(\"freeAddress1\", parseInt(postman.getGlobalVariable(\"startingBlockAddress\"), 10) + 20);",
+							"postman.setGlobalVariable(\"freeAddress2\", parseInt(postman.getGlobalVariable(\"startingBlockAddress\"), 10) + 30);",
+							"postman.setGlobalVariable(\"freeAddress3\", parseInt(postman.getGlobalVariable(\"startingBlockAddress\"), 10) + 40);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"blockId\": \"{{blockId}}\",\r\n    \"encSystemId\": \"{{encSystemId}}\",\r\n    \"timeOfAssignment\": \"{{timeOfAssignment}}\",\r\n    \"startingBlockAddress\": {{startingBlockAddress}},\r\n    \"endingBlockAddress\": {{endingBlockAddress}},\r\n    \"nextFreeAddress\": {{nextFreeAddress}},\r\n    \"freeAddressList\": [{{freeAddress0}}, {{freeAddress1}}, {{freeAddress2}}, {{freeAddress3}}]\r\n}"
+				},
+				"url": {
+					"raw": "{{http}}{{env}}{{urlCommunicationAddress}}/v1/offsets/{{encSystemId}}/{{blockId}}",
+					"host": [
+						"{{http}}{{env}}{{urlCommunicationAddress}}"
+					],
+					"path": [
+						"v1",
+						"offsets",
+						"{{encSystemId}}",
+						"{{blockId}}"
+					]
+				},
+				"description": "Polaris has brought 50 ECUs into side, so offsets address from startingBlockAddress to startingBlockAddress + 50 was used, which is represented by nextFreeAddress = startingBlockAddress + 50.\n\nHowever, among these 50 ECUs, Polaris decided to unmap 4 of them, which had offsets address as StartingBlockAddress + 10, StartingBlockAddress + 20, StartingBlockAddress + 30, StartingBlockAddress + 40. So these 4 offsets becomes available and mentioned in freeAddressList.\n\nOnce Polaris done with bring ECU into site, it uses this patch command to update the cloud that within the block of offsetss that allocated for this Polaris instance, it has used up 46 offsetss, and the available one are from nextFreeAddress to endingBlackAddress, plus the 4 offsets addresses mentioned in freeAddressList.\n\nThis Polaris of couse thinks its block of offsets still belonges to itself, and the retun of the Patch file should say blockReassigned: false. However, in reality, if there were 128 commissioning guys in the same site, the # 128 commissioning guy will be allocated the same offsets block as it was given to # 1 comissioning guy, and if # 1 commissionning guy decided to use his Polaris instance to PATCH, he will receive blockReassigned: true back which acknowledge him that he lost the block of offsets that were assigned to him."
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /v1/offsets/{encSystemId}/{blockId}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "845f537b-1757-41e9-b5c2-855f827b6099",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code should be 200 (nothing really get deleted, so retun is 200 instead of 204)\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{http}}{{env}}{{urlCommunicationAddress}}/v1/offsets/{{encSystemId}}/{{blockId}}",
+					"host": [
+						"{{http}}{{env}}{{urlCommunicationAddress}}"
+					],
+					"path": [
+						"v1",
+						"offsets",
+						"{{encSystemId}}",
+						"{{blockId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH /v1/offsets/{encSystemId}/{blockId} Again NOT ALLOWED",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "263550bb-9e36-4fa6-8d7e-6529b2b38c44",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code should be 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"//Response body check\r",
+							"pm.test(\"Response body check\", function () {\r",
+							"    pm.expect(jsonData.blockId).to.eql(postman.getGlobalVariable(\"blockId\"));\r",
+							"    pm.expect(jsonData.encSystemId).to.eql(postman.getGlobalVariable(\"encSystemId\"));\r",
+							"    pm.expect(jsonData.timeOfAssignment).to.not.eql(postman.getGlobalVariable(\"timeOfAssignment\"));\r",
+							"    pm.expect(jsonData.startingBlockAddress).to.eql(0);\r",
+							"    pm.expect(jsonData.endingBlockAddress).to.eql(0);\r",
+							"    pm.expect(jsonData.nextFreeAddress).to.eql(0);\r",
+							"    pm.expect(jsonData.freeAddressList).to.eql(null);\r",
+							"    pm.expect(jsonData.blockReassigned).to.eql(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5ccfb2bc-a66f-4950-a54b-bd1c0ddebc84",
+						"exec": [
+							"postman.setGlobalVariable(\"nextFreeAddress\", parseInt(postman.getGlobalVariable(\"startingBlockAddress\"), 10) + 50);",
+							"postman.setGlobalVariable(\"freeAddress0\", parseInt(postman.getGlobalVariable(\"startingBlockAddress\"), 10) + 10);",
+							"postman.setGlobalVariable(\"freeAddress1\", parseInt(postman.getGlobalVariable(\"startingBlockAddress\"), 10) + 20);",
+							"postman.setGlobalVariable(\"freeAddress2\", parseInt(postman.getGlobalVariable(\"startingBlockAddress\"), 10) + 30);",
+							"postman.setGlobalVariable(\"freeAddress3\", parseInt(postman.getGlobalVariable(\"startingBlockAddress\"), 10) + 40);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"blockId\": \"{{blockId}}\",\r\n    \"encSystemId\": \"{{encSystemId}}\",\r\n    \"timeOfAssignment\": \"{{timeOfAssignment}}\",\r\n    \"startingBlockAddress\": {{startingBlockAddress}},\r\n    \"endingBlockAddress\": {{endingBlockAddress}},\r\n    \"nextFreeAddress\": {{nextFreeAddress}},\r\n    \"freeAddressList\": [{{freeAddress0}}, {{freeAddress1}}, {{freeAddress2}}, {{freeAddress3}}]\r\n}"
+				},
+				"url": {
+					"raw": "{{http}}{{env}}{{urlCommunicationAddress}}/v1/offsets/{{encSystemId}}/{{blockId}}",
+					"host": [
+						"{{http}}{{env}}{{urlCommunicationAddress}}"
+					],
+					"path": [
+						"v1",
+						"offsets",
+						"{{encSystemId}}",
+						"{{blockId}}"
+					]
+				},
+				"description": "Polaris has brought 50 ECUs into side, so offsets address from startingBlockAddress to startingBlockAddress + 50 was used, which is represented by nextFreeAddress = startingBlockAddress + 50.\n\nHowever, among these 50 ECUs, Polaris decided to unmap 4 of them, which had offsets address as StartingBlockAddress + 10, StartingBlockAddress + 20, StartingBlockAddress + 30, StartingBlockAddress + 40. So these 4 offsets becomes available and mentioned in freeAddressList.\n\nOnce Polaris done with bring ECU into site, it uses this patch command to update the cloud that within the block of offsetss that allocated for this Polaris instance, it has used up 46 offsetss, and the available one are from nextFreeAddress to endingBlackAddress, plus the 4 offsets addresses mentioned in freeAddressList.\n\nThis Polaris of couse thinks its block of offsets still belonges to itself, and the retun of the Patch file should say blockReassigned: false. However, in reality, if there were 128 commissioning guys in the same site, the # 128 commissioning guy will be allocated the same offsets block as it was given to # 1 comissioning guy, and if # 1 commissionning guy decided to use his Polaris instance to PATCH, he will receive blockReassigned: true back which acknowledge him that he lost the block of offsets that were assigned to him."
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE  Organization",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1551f680-e5e9-46a4-b944-a39758717fec",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code should be 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{http}}{{env}}{{urlConfig}}/v1/Organization/{{organizationId}}",
+					"host": [
+						"{{http}}{{env}}{{urlConfig}}"
+					],
+					"path": [
+						"v1",
+						"Organization",
+						"{{organizationId}}"
+					]
+				},
+				"description": "Deletes a node by record id"
+			},
+			"response": []
+		},
+		{
+			"name": "POST Organization",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "46a32ea9-5880-4e7a-88a7-7c92afbeb7fd",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code check\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"//Response body check - node section\r",
+							"pm.test(\"Response body check - node section\", function () {\r",
+							"    pm.expect(jsonData.name).to.eql(\"OrganizationName\");\r",
+							"    pm.expect(jsonData.createdBy).to.eql(\"root\");\r",
+							"    pm.expect(jsonData.id).to.not.eql(null);\r",
+							"    postman.setGlobalVariable(\"organizationId\", jsonData.id);\r",
+							"});\r",
+							"\r",
+							"//Output node Id\r",
+							"pm.test(\"Organization Id: \" + postman.getGlobalVariable(\"organizationId\"), function () {});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1b11b272-2664-4826-bd85-dc1283fbed27",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"name\": \"OrganizationName\"\r\n}"
+				},
+				"url": {
+					"raw": "{{http}}{{env}}{{urlConfig}}/v1/Organization",
+					"host": [
+						"{{http}}{{env}}{{urlConfig}}"
+					],
+					"path": [
+						"v1",
+						"Organization"
+					]
+				},
+				"description": "Creates an Organization."
+			},
+			"response": []
+		},
+		{
+			"name": "POST Organization Contains EncSystem",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "46a32ea9-5880-4e7a-88a7-7c92afbeb7fd",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code check\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"//Response body check - node section\r",
+							"pm.test(\"Response body check - node section\", function () {\r",
+							"    pm.expect(jsonData.nodeType).to.eql(\"EncSystem\");\r",
+							"    pm.expect(jsonData.name).to.eql(\"EncSystemName\");\r",
+							"    pm.expect(jsonData.createdBy).to.eql(\"root\");\r",
+							"    pm.expect(jsonData.id).to.not.eql(null);\r",
+							"    postman.setGlobalVariable(\"encSystemId\", jsonData.id);\r",
+							"});\r",
+							"\r",
+							"postman.setGlobalVariable(\"repeatTimes\", 0);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"nodeType\": \"EncSystem\",\r\n\t\"DBStatus\": \"new\",\r\n\t\"Enable3D\": true,\r\n\t\"Enable4hrExtensionTime\": false,\r\n\t\"FormatStrings\": {\r\n\t\t\"default\": \"%type% %refaddress%\",\r\n\t\t\"FixtureModel\": \"%type% %refaddress%\"\r\n\t},\r\n\t\"TimeZone\": {\r\n\t\t\"PolarisId\": \"TimeZone_Eastern_Standard_Time\",\r\n\t\t\"offsets\": -180000000000\r\n\t},\r\n\t\"Name\": \"EncSystemName\",\r\n\t\"Customer\": \"CustomerName\",\r\n\t\"Notes\": \"Additional Notes\",\r\n\t\"SiteAddress\": \"53 street st\",\r\n\t\"SiteLatitude\": \"43.8563\",\r\n\t\"SiteLongitude\": \"-79.37784\"\r\n}\r\n\r\n"
+				},
+				"url": {
+					"raw": "{{http}}{{env}}{{urlConfig}}/v1/organization/{{organizationId}}/EncSystem",
+					"host": [
+						"{{http}}{{env}}{{urlConfig}}"
+					],
+					"path": [
+						"v1",
+						"organization",
+						"{{organizationId}}",
+						"EncSystem"
+					]
+				},
+				"description": "Creates an EncSystem contains by the Organization."
+			},
+			"response": []
+		},
+		{
+			"name": "GET /v1/offsets/{encSystemId} 128 times",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "263550bb-9e36-4fa6-8d7e-6529b2b38c44",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code should be 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"var i = parseInt(postman.getGlobalVariable(\"repeatTimes\"), 10);\r",
+							"if (i < 128) {\r",
+							"    pm.test(\"Response body check\" + i, function () {\r",
+							"        pm.expect(jsonData.blockId).to.not.eql(null);\r",
+							"        pm.expect(jsonData.encSystemId).to.eql(postman.getGlobalVariable(\"encSystemId\"));\r",
+							"        pm.expect(jsonData.timeOfAssignment).to.not.eql(null);\r",
+							"        pm.expect(jsonData.startingBlockAddress).to.be.not.below(256);\r",
+							"        pm.expect(jsonData.endingBlockAddress).to.be.not.above(65279);\r",
+							"        pm.expect(jsonData.freeAddressList.length).to.eql(0);\r",
+							"        // blockReassigned will only ever be true for PATCH\r",
+							"        pm.expect(jsonData.blockReassigned).to.eql(false);\r",
+							"        if (i == 0 || i == 127) {\r",
+							"            postman.setGlobalVariable(\"blockId\" + i, jsonData.blockId);\r",
+							"            postman.setGlobalVariable(\"timeOfAssignment\" + i, jsonData.timeOfAssignment);\r",
+							"            postman.setGlobalVariable(\"startingBlockAddress\" + i, jsonData.startingBlockAddress);\r",
+							"            postman.setGlobalVariable(\"endingBlockAddress\" + i, jsonData.endingBlockAddress);\r",
+							"            postman.setGlobalVariable(\"nextFreeAddress\" + i, jsonData.nextFreeAddress);\r",
+							"            postman.setGlobalVariable(\"blockReassigned\" + i, jsonData.blockReassigned);\r",
+							"            var offsetsRange = postman.getGlobalVariable(\"endingBlockAddress\" + i) - postman.getGlobalVariable(\"startingBlockAddress\" + i) + 1;\r",
+							"            pm.expect(offsetsRange).to.eql(512);\r",
+							"            pm.expect(jsonData.nextFreeAddress).to.eql(parseInt(postman.getGlobalVariable(\"startingBlockAddress\" + i), 10));\r",
+							"            // output i = 0 or i = 127:\r",
+							"            pm.test(\"blockId\" + i + \": \" + postman.getGlobalVariable(\"blockId\" + i), function () {});\r",
+							"            pm.test(\"timeOfAssignment\"  + i + \": \" + postman.getGlobalVariable(\"timeOfAssignment\" + i), function () {});\r",
+							"            pm.test(\"startingBlockAddress\"  + i + \": \" + postman.getGlobalVariable(\"startingBlockAddress\" + i), function () {});\r",
+							"            pm.test(\"endingBlockAddress\"  + i + \": \" + postman.getGlobalVariable(\"endingBlockAddress\" + i), function () {});\r",
+							"            pm.test(\"nextFreeAddress\"  + i + \": \" + postman.getGlobalVariable(\"nextFreeAddress\" + i), function () {});\r",
+							"            pm.test(\"blockReassigned\"  + i + \": \" + postman.getGlobalVariable(\"blockReassigned\" + i), function () {});\r",
+							"            if (i == 127) {\r",
+							"                postman.setNextRequest(\"DELETE  Organization after 128 times GET\");\r",
+							"            }\r",
+							"        }\r",
+							"    });\r",
+							"    postman.setGlobalVariable(\"repeatTimes\", i+1);\r",
+							"    postman.setNextRequest(\"GET /v1/offsets/{encSystemId} 128 times\");\r",
+							"}\r",
+							"\r",
+							"// 0th return should be the same as 127th return\r",
+							"if (i == 127) {\r",
+							"    pm.test(\"Response body check - 0th return should be the same as 127th return\", function () {\r",
+							"        pm.expect(postman.getGlobalVariable(\"blockId0\")).to.eql(postman.getGlobalVariable(\"blockId127\"));\r",
+							"        pm.expect(postman.getGlobalVariable(\"timeOfAssignment0\")).to.not.eql(postman.getGlobalVariable(\"timeOfAssignment127\"));\r",
+							"        pm.expect(postman.getGlobalVariable(\"startingBlockAddress0\")).to.eql(postman.getGlobalVariable(\"startingBlockAddress127\"));\r",
+							"        pm.expect(postman.getGlobalVariable(\"endingBlockAddress0\")).to.eql(postman.getGlobalVariable(\"endingBlockAddress127\"));\r",
+							"        pm.expect(postman.getGlobalVariable(\"nextFreeAddress0\")).to.eql(postman.getGlobalVariable(\"nextFreeAddress127\"));\r",
+							"        pm.expect(postman.getGlobalVariable(\"blockReassigned0\")).to.eql(postman.getGlobalVariable(\"blockReassigned127\"));\r",
+							"    });\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{http}}{{env}}{{urlCommunicationAddress}}/v1/offsets/{{encSystemId}}",
+					"host": [
+						"{{http}}{{env}}{{urlCommunicationAddress}}"
+					],
+					"path": [
+						"v1",
+						"offsets",
+						"{{encSystemId}}"
+					]
+				},
+				"description": "1 encSystem has 127 offsets blocks\neach offsets block size is 512 (i.e., 0x200)\noffsets range from 256 (i.e., 0x100) to 65279 (i.e., 0xfeff)\n\nmeaning:\nthere can be up to 127 commissioning guys work on the same site, each person has a Polaris, each Polaris can request a block of offsets.\n\nEach Polaris can bring up to 512 ECU into site.\n\nNote:\nIf I have 2 encSystems. when I GET 1st time of encSystem1, I got 256 to 767, when I GET 2nd time of encSystem2, I also got 256 to 767, this is expected, offsetss only have to be unique within an enc system"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE  Organization after 128 times GET",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1551f680-e5e9-46a4-b944-a39758717fec",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code should be 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{http}}{{env}}{{urlConfig}}/v1/Organization/{{organizationId}}",
+					"host": [
+						"{{http}}{{env}}{{urlConfig}}"
+					],
+					"path": [
+						"v1",
+						"Organization",
+						"{{organizationId}}"
+					]
+				},
+				"description": "Deletes a node by record id"
+			},
+			"response": []
+		},
+		{
+			"name": "POST Organization",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "46a32ea9-5880-4e7a-88a7-7c92afbeb7fd",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code check\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"//Response body check - node section\r",
+							"pm.test(\"Response body check - node section\", function () {\r",
+							"    pm.expect(jsonData.name).to.eql(\"OrganizationName\");\r",
+							"    pm.expect(jsonData.createdBy).to.eql(\"root\");\r",
+							"    pm.expect(jsonData.id).to.not.eql(null);\r",
+							"    postman.setGlobalVariable(\"organizationId\", jsonData.id);\r",
+							"});\r",
+							"\r",
+							"//Output node Id\r",
+							"pm.test(\"Organization Id: \" + postman.getGlobalVariable(\"organizationId\"), function () {});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1b11b272-2664-4826-bd85-dc1283fbed27",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"name\": \"OrganizationName\"\r\n}"
+				},
+				"url": {
+					"raw": "{{http}}{{env}}{{urlConfig}}/v1/Organization",
+					"host": [
+						"{{http}}{{env}}{{urlConfig}}"
+					],
+					"path": [
+						"v1",
+						"Organization"
+					]
+				},
+				"description": "Creates an Organization."
+			},
+			"response": []
+		},
+		{
+			"name": "POST Organization Contains EncSystem",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "46a32ea9-5880-4e7a-88a7-7c92afbeb7fd",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code check\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"//Response body check - node section\r",
+							"pm.test(\"Response body check - node section\", function () {\r",
+							"    pm.expect(jsonData.nodeType).to.eql(\"EncSystem\");\r",
+							"    pm.expect(jsonData.name).to.eql(\"EncSystemName\");\r",
+							"    pm.expect(jsonData.createdBy).to.eql(\"root\");\r",
+							"    pm.expect(jsonData.id).to.not.eql(null);\r",
+							"    postman.setGlobalVariable(\"encSystemId\", jsonData.id);\r",
+							"});\r",
+							"\r",
+							"postman.setGlobalVariable(\"repeatTimes\", 0);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"nodeType\": \"EncSystem\",\r\n\t\"DBStatus\": \"new\",\r\n\t\"Enable3D\": true,\r\n\t\"Enable4hrExtensionTime\": false,\r\n\t\"FormatStrings\": {\r\n\t\t\"default\": \"%type% %refaddress%\",\r\n\t\t\"FixtureModel\": \"%type% %refaddress%\"\r\n\t},\r\n\t\"TimeZone\": {\r\n\t\t\"PolarisId\": \"TimeZone_Eastern_Standard_Time\",\r\n\t\t\"offsets\": -180000000000\r\n\t},\r\n\t\"Name\": \"EncSystemName\",\r\n\t\"Customer\": \"CustomerName\",\r\n\t\"Notes\": \"Additional Notes\",\r\n\t\"SiteAddress\": \"53 street st\",\r\n\t\"SiteLatitude\": \"43.8563\",\r\n\t\"SiteLongitude\": \"-79.37784\"\r\n}\r\n\r\n"
+				},
+				"url": {
+					"raw": "{{http}}{{env}}{{urlConfig}}/v1/organization/{{organizationId}}/EncSystem",
+					"host": [
+						"{{http}}{{env}}{{urlConfig}}"
+					],
+					"path": [
+						"v1",
+						"organization",
+						"{{organizationId}}",
+						"EncSystem"
+					]
+				},
+				"description": "Creates an EncSystem contains by the Organization."
+			},
+			"response": []
+		},
+		{
+			"name": "GET /v1/offsets/{encSystemId} 127 times",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "263550bb-9e36-4fa6-8d7e-6529b2b38c44",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code should be 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"var i = parseInt(postman.getGlobalVariable(\"repeatTimes\"), 10);\r",
+							"if (i < 127) {\r",
+							"    pm.test(\"Response body check\" + i, function () {\r",
+							"        pm.expect(jsonData.blockId).to.not.eql(null);\r",
+							"        pm.expect(jsonData.encSystemId).to.eql(postman.getGlobalVariable(\"encSystemId\"));\r",
+							"        pm.expect(jsonData.timeOfAssignment).to.not.eql(null);\r",
+							"        pm.expect(jsonData.startingBlockAddress).to.be.not.below(256);\r",
+							"        pm.expect(jsonData.endingBlockAddress).to.be.not.above(65279);\r",
+							"        pm.expect(jsonData.freeAddressList.length).to.eql(0);\r",
+							"        // blockReassigned will only ever be true for PATCH\r",
+							"        pm.expect(jsonData.blockReassigned).to.eql(false);\r",
+							"        if (i == 126) {\r",
+							"            postman.setGlobalVariable(\"blockId\" + i, jsonData.blockId);\r",
+							"            postman.setGlobalVariable(\"timeOfAssignment\" + i, jsonData.timeOfAssignment);\r",
+							"            postman.setGlobalVariable(\"startingBlockAddress\" + i, jsonData.startingBlockAddress);\r",
+							"            postman.setGlobalVariable(\"endingBlockAddress\" + i, jsonData.endingBlockAddress);\r",
+							"            postman.setGlobalVariable(\"nextFreeAddress\" + i, jsonData.nextFreeAddress);\r",
+							"            postman.setGlobalVariable(\"blockReassigned\" + i, jsonData.blockReassigned);\r",
+							"            var offsetsRange = postman.getGlobalVariable(\"endingBlockAddress\" + i) - postman.getGlobalVariable(\"startingBlockAddress\" + i) + 1;\r",
+							"            pm.expect(offsetsRange).to.eql(512);\r",
+							"            pm.expect(jsonData.nextFreeAddress).to.eql(parseInt(postman.getGlobalVariable(\"startingBlockAddress\" + i), 10));\r",
+							"            // output i = 126:\r",
+							"            pm.test(\"blockId\" + i + \": \" + postman.getGlobalVariable(\"blockId\" + i), function () {});\r",
+							"            pm.test(\"timeOfAssignment\"  + i + \": \" + postman.getGlobalVariable(\"timeOfAssignment\" + i), function () {});\r",
+							"            pm.test(\"startingBlockAddress\"  + i + \": \" + postman.getGlobalVariable(\"startingBlockAddress\" + i), function () {});\r",
+							"            pm.test(\"endingBlockAddress\"  + i + \": \" + postman.getGlobalVariable(\"endingBlockAddress\" + i), function () {});\r",
+							"            pm.test(\"nextFreeAddress\"  + i + \": \" + postman.getGlobalVariable(\"nextFreeAddress\" + i), function () {});\r",
+							"            pm.test(\"blockReassigned\"  + i + \": \" + postman.getGlobalVariable(\"blockReassigned\" + i), function () {});\r",
+							"            // jump out of the loop\r",
+							"            postman.setNextRequest(\"DELETE /v1/offsets/{encSystemId}/{blockId} 126th block after 127 times GET\");\r",
+							"        }\r",
+							"        else {\r",
+							"            postman.setGlobalVariable(\"repeatTimes\", i+1);\r",
+							"            postman.setNextRequest(\"GET /v1/offsets/{encSystemId} 127 times\");\r",
+							"        }\r",
+							"    });\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{http}}{{env}}{{urlCommunicationAddress}}/v1/offsets/{{encSystemId}}",
+					"host": [
+						"{{http}}{{env}}{{urlCommunicationAddress}}"
+					],
+					"path": [
+						"v1",
+						"offsets",
+						"{{encSystemId}}"
+					]
+				},
+				"description": "1 encSystem has 127 offsets blocks\neach offsets block size is 512 (i.e., 0x200)\noffsets range from 256 (i.e., 0x100) to 65279 (i.e., 0xfeff)\n\nmeaning:\nthere can be up to 127 commissioning guys work on the same site, each person has a Polaris, each Polaris can request a block of offsets.\n\nEach Polaris can bring up to 512 ECU into site.\n\nNote:\nIf I have 2 encSystems. when I GET 1st time of encSystem1, I got 256 to 767, when I GET 2nd time of encSystem2, I also got 256 to 767, this is expected, offsetss only have to be unique within an enc system"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /v1/offsets/{encSystemId}/{blockId} 126th block after 127 times GET",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "845f537b-1757-41e9-b5c2-855f827b6099",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code should be 200 (nothing really get deleted, so retun is 200 instead of 204)\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{http}}{{env}}{{urlCommunicationAddress}}/v1/offsets/{{encSystemId}}/{{blockId126}}",
+					"host": [
+						"{{http}}{{env}}{{urlCommunicationAddress}}"
+					],
+					"path": [
+						"v1",
+						"offsets",
+						"{{encSystemId}}",
+						"{{blockId126}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET  /v1/offsets/{encSystemId} by Polaris A",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "263550bb-9e36-4fa6-8d7e-6529b2b38c44",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code should be 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"//Response body check\r",
+							"pm.test(\"Response body check\", function () {\r",
+							"    pm.expect(jsonData.blockId).to.eql(postman.getGlobalVariable(\"blockId126\"));\r",
+							"    pm.expect(jsonData.encSystemId).to.eql(postman.getGlobalVariable(\"encSystemId\"));\r",
+							"    pm.expect(jsonData.timeOfAssignment).to.not.eql(postman.getGlobalVariable(\"timeOfAssignment126\"));\r",
+							"    postman.setGlobalVariable(\"timeOfAssignmentPolarisA\", jsonData.timeOfAssignment);\r",
+							"    pm.expect(jsonData.startingBlockAddress).to.equal(parseInt(postman.getGlobalVariable(\"startingBlockAddress126\"), 10));\r",
+							"    pm.expect(jsonData.endingBlockAddress).to.equal(parseInt(postman.getGlobalVariable(\"endingBlockAddress126\"), 10));\r",
+							"    pm.expect(jsonData.nextFreeAddress).to.eql(parseInt(postman.getGlobalVariable(\"nextFreeAddress126\"), 10));\r",
+							"    pm.expect(jsonData.freeAddressList.length).to.eql(0);\r",
+							"    pm.expect(jsonData.blockReassigned).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"// output timeOfAssignment:\r",
+							"pm.test(\"timeOfAssignment126: \" + postman.getGlobalVariable(\"timeOfAssignment126\"), function () {});\r",
+							"pm.test(\"timeOfAssignmentPolarisA: \" + postman.getGlobalVariable(\"timeOfAssignmentPolarisA\"), function () {});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{http}}{{env}}{{urlCommunicationAddress}}/v1/offsets/{{encSystemId}}",
+					"host": [
+						"{{http}}{{env}}{{urlCommunicationAddress}}"
+					],
+					"path": [
+						"v1",
+						"offsets",
+						"{{encSystemId}}"
+					]
+				},
+				"description": "1 encSystem has 127 offsets blocks\neach offsets block size is 512 (i.e., 0x200)\noffsets range from 256 (i.e., 0x100) to 65279 (i.e., 0xfeff)\n\nmeaning:\nthere can be up to 127 commissioning guys work on the same site, each person has a Polaris, each Polaris can request a block of offsets.\n\nEach Polaris can bring up to 512 ECU into site."
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /v1/offsets/{encSystemId}/{blockId} 126th block",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "845f537b-1757-41e9-b5c2-855f827b6099",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code should be 200 (nothing really get deleted, so retun is 200 instead of 204)\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{http}}{{env}}{{urlCommunicationAddress}}/v1/offsets/{{encSystemId}}/{{blockId126}}",
+					"host": [
+						"{{http}}{{env}}{{urlCommunicationAddress}}"
+					],
+					"path": [
+						"v1",
+						"offsets",
+						"{{encSystemId}}",
+						"{{blockId126}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET  /v1/offsets/{encSystemId} by Polaris B",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "263550bb-9e36-4fa6-8d7e-6529b2b38c44",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code should be 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"//Response body check\r",
+							"pm.test(\"Response body check\", function () {\r",
+							"    pm.expect(jsonData.blockId).to.eql(postman.getGlobalVariable(\"blockId126\"));\r",
+							"    pm.expect(jsonData.encSystemId).to.eql(postman.getGlobalVariable(\"encSystemId\"));\r",
+							"    pm.expect(jsonData.timeOfAssignment).to.not.eql(postman.getGlobalVariable(\"timeOfAssignment126\"));\r",
+							"    pm.expect(jsonData.timeOfAssignment).to.not.eql(postman.getGlobalVariable(\"timeOfAssignmentPolarisA\"));\r",
+							"    postman.setGlobalVariable(\"timeOfAssignmentPolarisB\", jsonData.timeOfAssignment);\r",
+							"    pm.expect(jsonData.startingBlockAddress).to.equal(parseInt(postman.getGlobalVariable(\"startingBlockAddress126\"), 10));\r",
+							"    pm.expect(jsonData.endingBlockAddress).to.equal(parseInt(postman.getGlobalVariable(\"endingBlockAddress126\"), 10));\r",
+							"    pm.expect(jsonData.nextFreeAddress).to.eql(parseInt(postman.getGlobalVariable(\"nextFreeAddress126\"), 10));\r",
+							"    pm.expect(jsonData.freeAddressList.length).to.eql(0);\r",
+							"    pm.expect(jsonData.blockReassigned).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"// output timeOfAssignment:\r",
+							"pm.test(\"timeOfAssignment126: \" + postman.getGlobalVariable(\"timeOfAssignment126\"), function () {});\r",
+							"pm.test(\"timeOfAssignmentPolarisA: \" + postman.getGlobalVariable(\"timeOfAssignmentPolarisA\"), function () {});\r",
+							"pm.test(\"timeOfAssignmentPolarisB: \" + postman.getGlobalVariable(\"timeOfAssignmentPolarisB\"), function () {});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{http}}{{env}}{{urlCommunicationAddress}}/v1/offsets/{{encSystemId}}",
+					"host": [
+						"{{http}}{{env}}{{urlCommunicationAddress}}"
+					],
+					"path": [
+						"v1",
+						"offsets",
+						"{{encSystemId}}"
+					]
+				},
+				"description": "1 encSystem has 127 offsets blocks\neach offsets block size is 512 (i.e., 0x200)\noffsets range from 256 (i.e., 0x100) to 65279 (i.e., 0xfeff)\n\nmeaning:\nthere can be up to 127 commissioning guys work on the same site, each person has a Polaris, each Polaris can request a block of offsets.\n\nEach Polaris can bring up to 512 ECU into site."
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH /v1/offsets/{encSystemId}/{blockId} by Polaris A NOT ALLOWED",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "263550bb-9e36-4fa6-8d7e-6529b2b38c44",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code should be 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"//console.log(jsonData);\r",
+							"//Response body check\r",
+							"pm.test(\"Response body check\", function () {\r",
+							"    pm.expect(jsonData.blockId).to.eql(postman.getGlobalVariable(\"blockId126\"));\r",
+							"    pm.expect(jsonData.encSystemId).to.eql(postman.getGlobalVariable(\"encSystemId\"));\r",
+							"    pm.expect(jsonData.timeOfAssignment).to.not.eql(postman.getGlobalVariable(\"timeOfAssignmentPolarisB\"));\r",
+							"    pm.expect(jsonData.startingBlockAddress).to.eql(0);\r",
+							"    pm.expect(jsonData.endingBlockAddress).to.eql(0);\r",
+							"    pm.expect(jsonData.nextFreeAddress).to.eql(0);\r",
+							"    pm.expect(jsonData.freeAddressList).to.eql(null);\r",
+							"    pm.expect(jsonData.blockReassigned).to.eql(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5ccfb2bc-a66f-4950-a54b-bd1c0ddebc84",
+						"exec": [
+							"postman.setGlobalVariable(\"nextFreeAddress\", parseInt(postman.getGlobalVariable(\"startingBlockAddress126\"), 10) + 50);",
+							"postman.setGlobalVariable(\"freeAddress0\", parseInt(postman.getGlobalVariable(\"startingBlockAddress126\"), 10) + 10);",
+							"postman.setGlobalVariable(\"freeAddress1\", parseInt(postman.getGlobalVariable(\"startingBlockAddress126\"), 10) + 20);",
+							"postman.setGlobalVariable(\"freeAddress2\", parseInt(postman.getGlobalVariable(\"startingBlockAddress126\"), 10) + 30);",
+							"postman.setGlobalVariable(\"freeAddress3\", parseInt(postman.getGlobalVariable(\"startingBlockAddress126\"), 10) + 40);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"blockId\": \"{{blockId126}}\",\r\n    \"encSystemId\": \"{{encSystemId}}\",\r\n    \"timeOfAssignment\": \"{{timeOfAssignmentPolarisA}}\",\r\n    \"startingBlockAddress\": {{startingBlockAddress126}},\r\n    \"endingBlockAddress\": {{endingBlockAddress126}},\r\n    \"nextFreeAddress\": {{nextFreeAddress}},\r\n    \"freeAddressList\": [{{freeAddress0}}, {{freeAddress1}}, {{freeAddress2}}, {{freeAddress3}}]\r\n}"
+				},
+				"url": {
+					"raw": "{{http}}{{env}}{{urlCommunicationAddress}}/v1/offsets/{{encSystemId}}/{{blockId126}}",
+					"host": [
+						"{{http}}{{env}}{{urlCommunicationAddress}}"
+					],
+					"path": [
+						"v1",
+						"offsets",
+						"{{encSystemId}}",
+						"{{blockId126}}"
+					]
+				},
+				"description": "Polaris has brought 50 ECUs into side, so offsets address from startingBlockAddress to startingBlockAddress + 50 was used, which is represented by nextFreeAddress = startingBlockAddress + 50.\n\nHowever, among these 50 ECUs, Polaris decided to unmap 4 of them, which had offsets address as StartingBlockAddress + 10, StartingBlockAddress + 20, StartingBlockAddress + 30, StartingBlockAddress + 40. So these 4 offsets becomes available and mentioned in freeAddressList.\n\nOnce Polaris done with bring ECU into site, it uses this patch command to update the cloud that within the block of offsetss that allocated for this Polaris instance, it has used up 46 offsetss, and the available one are from nextFreeAddress to endingBlackAddress, plus the 4 offsets addresses mentioned in freeAddressList.\n\nThis Polaris of couse thinks its block of offsets still belonges to itself, and the retun of the Patch file should say blockReassigned: false. However, in reality, if there were 128 commissioning guys in the same site, the # 128 commissioning guy will be allocated the same offsets block as it was given to # 1 comissioning guy, and if # 1 commissionning guy decided to use his Polaris instance to PATCH, he will receive blockReassigned: true back which acknowledge him that he lost the block of offsets that were assigned to him."
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH /v1/offsets/{encSystemId}/{blockId} by Polaris B ALLOWED",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "263550bb-9e36-4fa6-8d7e-6529b2b38c44",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code should be 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"//console.log(jsonData);\r",
+							"//Response body check\r",
+							"pm.test(\"Response body check\", function () {\r",
+							"    pm.expect(jsonData.blockId).to.eql(postman.getGlobalVariable(\"blockId126\"));\r",
+							"    pm.expect(jsonData.encSystemId).to.eql(postman.getGlobalVariable(\"encSystemId\"));\r",
+							"    pm.expect(jsonData.timeOfAssignment).to.not.eql(postman.getGlobalVariable(\"timeOfAssignment126\"));\r",
+							"    pm.expect(jsonData.timeOfAssignment).to.not.eql(postman.getGlobalVariable(\"timeOfAssignmentPolarisA\"));\r",
+							"    pm.expect(jsonData.timeOfAssignment).to.not.eql(postman.getGlobalVariable(\"timeOfAssignmentPolarisB\"));\r",
+							"    pm.expect(jsonData.startingBlockAddress).to.eql(parseInt(postman.getGlobalVariable(\"startingBlockAddress126\"), 10));\r",
+							"    pm.expect(jsonData.endingBlockAddress).to.eql(parseInt(postman.getGlobalVariable(\"endingBlockAddress126\"), 10));\r",
+							"    pm.expect(jsonData.nextFreeAddress).to.eql(parseInt(postman.getGlobalVariable(\"nextFreeAddress\"), 10));\r",
+							"    pm.expect(jsonData.freeAddressList.length).to.eql(4);\r",
+							"    for (var i = 0; i < jsonData.freeAddressList.length; i++) {\r",
+							"        pm.expect(jsonData.freeAddressList[i]).to.eql(parseInt(postman.getGlobalVariable(\"freeAddress\" + i), 10));\r",
+							"    }\r",
+							"    pm.expect(jsonData.blockReassigned).to.eql(false);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5ccfb2bc-a66f-4950-a54b-bd1c0ddebc84",
+						"exec": [
+							"postman.setGlobalVariable(\"nextFreeAddress\", parseInt(postman.getGlobalVariable(\"startingBlockAddress126\"), 10) + 50);",
+							"postman.setGlobalVariable(\"freeAddress0\", parseInt(postman.getGlobalVariable(\"startingBlockAddress126\"), 10) + 10);",
+							"postman.setGlobalVariable(\"freeAddress1\", parseInt(postman.getGlobalVariable(\"startingBlockAddress126\"), 10) + 20);",
+							"postman.setGlobalVariable(\"freeAddress2\", parseInt(postman.getGlobalVariable(\"startingBlockAddress126\"), 10) + 30);",
+							"postman.setGlobalVariable(\"freeAddress3\", parseInt(postman.getGlobalVariable(\"startingBlockAddress126\"), 10) + 40);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"blockId\": \"{{blockId126}}\",\r\n    \"encSystemId\": \"{{encSystemId}}\",\r\n    \"timeOfAssignment\": \"{{timeOfAssignmentPolarisB}}\",\r\n    \"startingBlockAddress\": {{startingBlockAddress126}},\r\n    \"endingBlockAddress\": {{endingBlockAddress126}},\r\n    \"nextFreeAddress\": {{nextFreeAddress}},\r\n    \"freeAddressList\": [{{freeAddress0}}, {{freeAddress1}}, {{freeAddress2}}, {{freeAddress3}}]\r\n}"
+				},
+				"url": {
+					"raw": "{{http}}{{env}}{{urlCommunicationAddress}}/v1/offsets/{{encSystemId}}/{{blockId126}}",
+					"host": [
+						"{{http}}{{env}}{{urlCommunicationAddress}}"
+					],
+					"path": [
+						"v1",
+						"offsets",
+						"{{encSystemId}}",
+						"{{blockId126}}"
+					]
+				},
+				"description": "Polaris has brought 50 ECUs into side, so offsets address from startingBlockAddress to startingBlockAddress + 50 was used, which is represented by nextFreeAddress = startingBlockAddress + 50.\n\nHowever, among these 50 ECUs, Polaris decided to unmap 4 of them, which had offsets address as StartingBlockAddress + 10, StartingBlockAddress + 20, StartingBlockAddress + 30, StartingBlockAddress + 40. So these 4 offsets becomes available and mentioned in freeAddressList.\n\nOnce Polaris done with bring ECU into site, it uses this patch command to update the cloud that within the block of offsetss that allocated for this Polaris instance, it has used up 46 offsetss, and the available one are from nextFreeAddress to endingBlackAddress, plus the 4 offsets addresses mentioned in freeAddressList.\n\nThis Polaris of couse thinks its block of offsets still belonges to itself, and the retun of the Patch file should say blockReassigned: false. However, in reality, if there were 128 commissioning guys in the same site, the # 128 commissioning guy will be allocated the same offsets block as it was given to # 1 comissioning guy, and if # 1 commissionning guy decided to use his Polaris instance to PATCH, he will receive blockReassigned: true back which acknowledge him that he lost the block of offsets that were assigned to him."
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE  Organization",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1551f680-e5e9-46a4-b944-a39758717fec",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code should be 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{http}}{{env}}{{urlConfig}}/v1/Organization/{{organizationId}}",
+					"host": [
+						"{{http}}{{env}}{{urlConfig}}"
+					],
+					"path": [
+						"v1",
+						"Organization",
+						"{{organizationId}}"
+					]
+				},
+				"description": "Deletes a node by record id"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{password}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{username}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "f3575ad5-9346-4f5d-b900-b1e161247ee3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "89d71f2d-4f88-457f-9060-e9a9f213d56c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
