@@ -1,0 +1,1021 @@
+{
+	"info": {
+		"_postman_id": "73dee6c6-430a-4f78-b7e6-1d5d5285ca1b",
+		"name": "sanityResourceResources",
+		"description": "Sanity check for BIM Resource API - Resources. If you want to run this script in cmd, make sure to modify filePath in the globalVariables.json, and add your file location to formdata - src in sanityResourceResources.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST /v1/resources/{organizationId}/{encSystemId}/{resourceName} JPG",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "21b5ad15-5521-4a01-a1a3-5293b0e39f1a",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code check\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Response body check\r",
+							"pm.test(\"Response body check\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.hasOwnProperty(\"url\")).to.eql(true);\r",
+							"    \r",
+							"    var http_local = postman.getGlobalVariable(\"http\");\r",
+							"    var env_local = postman.getGlobalVariable(\"env\");\r",
+							"    var urlResource_local = postman.getGlobalVariable(\"urlResource\");\r",
+							"    var organizationId_local = postman.getGlobalVariable(\"organizationId\");\r",
+							"    var encSystemId_local = postman.getGlobalVariable(\"encSystem1Id\");\r",
+							"    var resourceName_local = postman.getGlobalVariable(\"resourceJPGName\");\r",
+							"    var expectedUrl = http_local + env_local + urlResource_local + \"/v1/resources/\" + organizationId_local + \"/\" + encSystemId_local + \"/\" + resourceName_local + \".jpg\";\r",
+							"    pm.expect(jsonData.url).to.eql(expectedUrl);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d1fce43e-80b5-464a-b231-b0e55d3af6b7",
+						"exec": [
+							"var uuid = require('uuid');\r",
+							"postman.setGlobalVariable('resourceJPGName', uuid.v4());\r",
+							"\r",
+							"var uuid1 = require('uuid');\r",
+							"postman.setGlobalVariable('organizationId', uuid1.v4());\r",
+							"\r",
+							"var uuid2 = require('uuid');\r",
+							"postman.setGlobalVariable('encSystem1Id', uuid2.v4());\r",
+							"\r",
+							"var uuid3 = require('uuid');\r",
+							"postman.setGlobalVariable('encSystem2Id', uuid2.v4());\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "resource",
+						"value": "",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "resource",
+							"type": "file",
+							"src": "{{filePath}}smiley.JPG"
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{http}}{{env}}{{urlResource}}/v1/resources/{{organizationId}}/{{encSystem1Id}}/{{resourceJPGName}}.jpg",
+					"host": [
+						"{{http}}{{env}}{{urlResource}}"
+					],
+					"path": [
+						"v1",
+						"resources",
+						"{{organizationId}}",
+						"{{encSystem1Id}}",
+						"{{resourceJPGName}}.jpg"
+					]
+				},
+				"description": "Uploads a resource, such as a floorplan"
+			},
+			"response": []
+		},
+		{
+			"name": "GET /v1/resources/{organizationId}/{encSystemId}/{resourceName} JPG",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9fb7f74e-8360-4867-90b0-dbc09aa5e872",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code check\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{http}}{{env}}{{urlResource}}/v1/resources/{{organizationId}}/{{encSystem1Id}}/{{resourceJPGName}}.jpg",
+					"host": [
+						"{{http}}{{env}}{{urlResource}}"
+					],
+					"path": [
+						"v1",
+						"resources",
+						"{{organizationId}}",
+						"{{encSystem1Id}}",
+						"{{resourceJPGName}}.jpg"
+					]
+				},
+				"description": "Returns a resource content"
+			},
+			"response": []
+		},
+		{
+			"name": "POST /v1/resources/{organizationId}/{encSystemId}/{resourceName} XML",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "744889e9-f79b-4b66-8560-cfe831c59e0f",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code check\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Response body check\r",
+							"pm.test(\"Response body check\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.hasOwnProperty(\"url\")).to.eql(true);\r",
+							"    \r",
+							"    var http_local = postman.getGlobalVariable(\"http\");\r",
+							"    var env_local = postman.getGlobalVariable(\"env\");\r",
+							"    var urlResource_local = postman.getGlobalVariable(\"urlResource\");\r",
+							"    var organizationId_local = postman.getGlobalVariable(\"organizationId\");\r",
+							"    var encSystemId_local = postman.getGlobalVariable(\"encSystem1Id\");\r",
+							"    var resourceName_local = postman.getGlobalVariable(\"resourceXMLName\");\r",
+							"    var expectedUrl = http_local + env_local + urlResource_local + \"/v1/resources/\" + organizationId_local + \"/\" + encSystemId_local + \"/\" + resourceName_local + \".xml\";\r",
+							"    pm.expect(jsonData.url).to.eql(expectedUrl);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d3e89195-abe8-4ede-99b0-56cfc577e1f7",
+						"exec": [
+							"var uuid = require('uuid');\r",
+							"postman.setGlobalVariable('resourceXMLName', uuid.v4());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "resource",
+						"type": "text",
+						"value": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "resource",
+							"type": "file",
+							"src": "{{filePath}}build.xml"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{http}}{{env}}{{urlResource}}/v1/resources/{{organizationId}}/{{encSystem1Id}}/{{resourceXMLName}}.xml",
+					"host": [
+						"{{http}}{{env}}{{urlResource}}"
+					],
+					"path": [
+						"v1",
+						"resources",
+						"{{organizationId}}",
+						"{{encSystem1Id}}",
+						"{{resourceXMLName}}.xml"
+					]
+				},
+				"description": "Uploads a resource, such as a floorplan"
+			},
+			"response": []
+		},
+		{
+			"name": "GET /v1/resources/{organizationId}/{encSystemId}/{resourceName} XML",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9fb7f74e-8360-4867-90b0-dbc09aa5e872",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code check\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{http}}{{env}}{{urlResource}}/v1/resources/{{organizationId}}/{{encSystem1Id}}/{{resourceXMLName}}.xml",
+					"host": [
+						"{{http}}{{env}}{{urlResource}}"
+					],
+					"path": [
+						"v1",
+						"resources",
+						"{{organizationId}}",
+						"{{encSystem1Id}}",
+						"{{resourceXMLName}}.xml"
+					]
+				},
+				"description": "Returns a resource content"
+			},
+			"response": []
+		},
+		{
+			"name": "POST /v1/resources/{organizationId}/{encSystemId}/{resourceName} SVG",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "246642f0-37fe-47c6-a284-f927ae7a55f6",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code check\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Response body check\r",
+							"pm.test(\"Response body check\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.hasOwnProperty(\"url\")).to.eql(true);\r",
+							"    \r",
+							"    var http_local = postman.getGlobalVariable(\"http\");\r",
+							"    var env_local = postman.getGlobalVariable(\"env\");\r",
+							"    var urlResource_local = postman.getGlobalVariable(\"urlResource\");\r",
+							"    var organizationId_local = postman.getGlobalVariable(\"organizationId\");\r",
+							"    var encSystemId_local = postman.getGlobalVariable(\"encSystem2Id\");\r",
+							"    var resourceName_local = postman.getGlobalVariable(\"resourceSVGName\");\r",
+							"    var expectedUrl = http_local + env_local + urlResource_local + \"/v1/resources/\" + organizationId_local + \"/\" + encSystemId_local + \"/\" + resourceName_local + \".svg\";\r",
+							"    pm.expect(jsonData.url).to.eql(expectedUrl);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f3aba49f-27ee-4d1a-9e61-321c0a2867ca",
+						"exec": [
+							"var uuid = require('uuid');\r",
+							"postman.setGlobalVariable('resourceSVGName', uuid.v4());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "resource",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "resource",
+							"type": "file",
+							"src": "{{filePath}}Freesample.svg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{http}}{{env}}{{urlResource}}/v1/resources/{{organizationId}}/{{encSystem2Id}}/{{resourceSVGName}}.svg",
+					"host": [
+						"{{http}}{{env}}{{urlResource}}"
+					],
+					"path": [
+						"v1",
+						"resources",
+						"{{organizationId}}",
+						"{{encSystem2Id}}",
+						"{{resourceSVGName}}.svg"
+					]
+				},
+				"description": "Uploads a resource, such as a floorplan"
+			},
+			"response": []
+		},
+		{
+			"name": "GET /v1/resources/{organizationId}/{encSystemId}/{resourceName} SVG",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9fb7f74e-8360-4867-90b0-dbc09aa5e872",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code check\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{http}}{{env}}{{urlResource}}/v1/resources/{{organizationId}}/{{encSystem2Id}}/{{resourceSVGName}}.svg",
+					"host": [
+						"{{http}}{{env}}{{urlResource}}"
+					],
+					"path": [
+						"v1",
+						"resources",
+						"{{organizationId}}",
+						"{{encSystem2Id}}",
+						"{{resourceSVGName}}.svg"
+					]
+				},
+				"description": "Returns a resource content"
+			},
+			"response": []
+		},
+		{
+			"name": "POST /v1/resources/{organizationId}/{encSystemId}/{resourceName} DWG",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "164f7a86-5502-43b4-87f6-3a374b257070",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code check\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Response body check\r",
+							"pm.test(\"Response body check\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.hasOwnProperty(\"url\")).to.eql(true);\r",
+							"    \r",
+							"    var http_local = postman.getGlobalVariable(\"http\");\r",
+							"    var env_local = postman.getGlobalVariable(\"env\");\r",
+							"    var urlResource_local = postman.getGlobalVariable(\"urlResource\");\r",
+							"    var organizationId_local = postman.getGlobalVariable(\"organizationId\");\r",
+							"    var encSystemId_local = postman.getGlobalVariable(\"encSystem2Id\");\r",
+							"    var resourceName_local = postman.getGlobalVariable(\"resourceDWGName\");\r",
+							"    var expectedUrl = http_local + env_local + urlResource_local + \"/v1/resources/\" + organizationId_local + \"/\" + encSystemId_local + \"/\" + resourceName_local + \".dwg\";\r",
+							"    pm.expect(jsonData.url).to.eql(expectedUrl);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7f3f189c-78d6-4255-83b4-270a8fb117c5",
+						"exec": [
+							"var uuid = require('uuid');\r",
+							"postman.setGlobalVariable('resourceDWGName', uuid.v4());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "resource",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "resource",
+							"type": "file",
+							"src": "{{filePath}}Markham Reflected Ceiling Plan.dwg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{http}}{{env}}{{urlResource}}/v1/resources/{{organizationId}}/{{encSystem2Id}}/{{resourceDWGName}}.dwg",
+					"host": [
+						"{{http}}{{env}}{{urlResource}}"
+					],
+					"path": [
+						"v1",
+						"resources",
+						"{{organizationId}}",
+						"{{encSystem2Id}}",
+						"{{resourceDWGName}}.dwg"
+					]
+				},
+				"description": "Uploads a resource, such as a floorplan"
+			},
+			"response": []
+		},
+		{
+			"name": "GET /v1/resources/{organizationId}/{encSystemId}/{resourceName} DWG",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9fb7f74e-8360-4867-90b0-dbc09aa5e872",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code check\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{http}}{{env}}{{urlResource}}/v1/resources/{{organizationId}}/{{encSystem2Id}}/{{resourceDWGName}}.dwg",
+					"host": [
+						"{{http}}{{env}}{{urlResource}}"
+					],
+					"path": [
+						"v1",
+						"resources",
+						"{{organizationId}}",
+						"{{encSystem2Id}}",
+						"{{resourceDWGName}}.dwg"
+					]
+				},
+				"description": "Returns a resource content"
+			},
+			"response": []
+		},
+		{
+			"name": "GET /v1/resources/{organizationId} ORGANIZATION",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "16917ce4-14a7-456f-86ae-97486996ae60",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code check\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Response body check\r",
+							"pm.test(\"Response body check\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData[0].hasOwnProperty(\"url\")).to.eql(true);\r",
+							"    pm.expect(jsonData[1].hasOwnProperty(\"url\")).to.eql(true);\r",
+							"    pm.expect(jsonData[2].hasOwnProperty(\"url\")).to.eql(true);\r",
+							"    pm.expect(jsonData[3].hasOwnProperty(\"url\")).to.eql(true);\r",
+							"    \r",
+							"    var http_local = postman.getGlobalVariable(\"http\");\r",
+							"    var env_local = postman.getGlobalVariable(\"env\");\r",
+							"    var urlResource_local = postman.getGlobalVariable(\"urlResource\");\r",
+							"    var organizationId_local = postman.getGlobalVariable(\"organizationId\");\r",
+							"    var encSystem1Id_local = postman.getGlobalVariable(\"encSystem1Id\");\r",
+							"    var encSystem2Id_local = postman.getGlobalVariable(\"encSystem2Id\");\r",
+							"    var resourceJPGName_local = postman.getGlobalVariable(\"resourceJPGName\");\r",
+							"    var resourceXMLName_local = postman.getGlobalVariable(\"resourceXMLName\");\r",
+							"    var resourceSVGName_local = postman.getGlobalVariable(\"resourceSVGName\");\r",
+							"    var resourceDWGName_local = postman.getGlobalVariable(\"resourceDWGName\");\r",
+							"    var expectedJPGUrl = http_local + env_local + urlResource_local + \"/v1/resources/\" + organizationId_local + \"/\" + encSystem1Id_local + \"/\" + resourceJPGName_local + \".jpg\";\r",
+							"    var expectedXMLUrl = http_local + env_local + urlResource_local + \"/v1/resources/\" + organizationId_local + \"/\" + encSystem1Id_local + \"/\" + resourceXMLName_local + \".xml\";\r",
+							"    var expectedSVGUrl = http_local + env_local + urlResource_local + \"/v1/resources/\" + organizationId_local + \"/\" + encSystem2Id_local + \"/\" + resourceSVGName_local + \".svg\";\r",
+							"    var expectedDWGUrl = http_local + env_local + urlResource_local + \"/v1/resources/\" + organizationId_local + \"/\" + encSystem2Id_local + \"/\" + resourceDWGName_local + \".dwg\";\r",
+							"    for (var i=0; i<jsonData.length; i++) {\r",
+							"        if (JSON.stringify(jsonData[i].url).includes(\"jpg\")) {\r",
+							"            pm.expect(jsonData[i].url).to.eql(expectedJPGUrl);\r",
+							"        }else if (JSON.stringify(jsonData[i].url).includes(\"xml\")) {\r",
+							"            pm.expect(jsonData[i].url).to.eql(expectedXMLUrl);\r",
+							"        }else if (JSON.stringify(jsonData[i].url).includes(\"svg\")) {\r",
+							"            pm.expect(jsonData[i].url).to.eql(expectedSVGUrl);\r",
+							"        }else if (JSON.stringify(jsonData[i].url).includes(\"dwg\")) {\r",
+							"            pm.expect(jsonData[i].url).to.eql(expectedDWGUrl);\r",
+							"        }else {\r",
+							"            pm.expect(jsonData[i].url).to.eql(\"none of the returned URL matches!\");\r",
+							"        }\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{http}}{{env}}{{urlResource}}/v1/resources/{{organizationId}}",
+					"host": [
+						"{{http}}{{env}}{{urlResource}}"
+					],
+					"path": [
+						"v1",
+						"resources",
+						"{{organizationId}}"
+					]
+				},
+				"description": "Returns list of resources Urls under an Organization"
+			},
+			"response": []
+		},
+		{
+			"name": "GET /v1/resources/{organizationId}/{encSystemId} ENCSYSTEM1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "66d99015-0b10-428e-ba63-16c7a93e7f0c",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code check\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Response body check\r",
+							"pm.test(\"Response body check\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData[0].hasOwnProperty(\"url\")).to.eql(true);\r",
+							"    pm.expect(jsonData[1].hasOwnProperty(\"url\")).to.eql(true);\r",
+							"    \r",
+							"    var http_local = postman.getGlobalVariable(\"http\");\r",
+							"    var env_local = postman.getGlobalVariable(\"env\");\r",
+							"    var urlResource_local = postman.getGlobalVariable(\"urlResource\");\r",
+							"    var organizationId_local = postman.getGlobalVariable(\"organizationId\");\r",
+							"    var encSystem1Id_local = postman.getGlobalVariable(\"encSystem1Id\");\r",
+							"    var resourceJPGName_local = postman.getGlobalVariable(\"resourceJPGName\");\r",
+							"    var resourceXMLName_local = postman.getGlobalVariable(\"resourceXMLName\");\r",
+							"    var expectedJPGUrl = http_local + env_local + urlResource_local + \"/v1/resources/\" + organizationId_local + \"/\" + encSystem1Id_local + \"/\" + resourceJPGName_local + \".jpg\";\r",
+							"    var expectedXMLUrl = http_local + env_local + urlResource_local + \"/v1/resources/\" + organizationId_local + \"/\" + encSystem1Id_local + \"/\" + resourceXMLName_local + \".xml\";\r",
+							"    for (var i=0; i<jsonData.length; i++) {\r",
+							"        if (JSON.stringify(jsonData[i].url).includes(\"jpg\")) {\r",
+							"            pm.expect(jsonData[i].url).to.eql(expectedJPGUrl);\r",
+							"        }else if (JSON.stringify(jsonData[i].url).includes(\"xml\")) {\r",
+							"            pm.expect(jsonData[i].url).to.eql(expectedXMLUrl);\r",
+							"        }else {\r",
+							"            pm.expect(jsonData[i].url).to.eql(\"none of the returned URL matches!\");\r",
+							"        }\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{http}}{{env}}{{urlResource}}/v1/resources/{{organizationId}}/{{encSystem1Id}}",
+					"host": [
+						"{{http}}{{env}}{{urlResource}}"
+					],
+					"path": [
+						"v1",
+						"resources",
+						"{{organizationId}}",
+						"{{encSystem1Id}}"
+					]
+				},
+				"description": "Returns list of resource Urls under a EncSystem"
+			},
+			"response": []
+		},
+		{
+			"name": "GET /v1/resources/{organizationId}/{encSystemId} ENCSYSTEM2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "34baacb5-2fdc-47a2-ba73-89afb286215c",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code check\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Response body check\r",
+							"pm.test(\"Response body check\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData[0].hasOwnProperty(\"url\")).to.eql(true);\r",
+							"    pm.expect(jsonData[1].hasOwnProperty(\"url\")).to.eql(true);\r",
+							"    \r",
+							"    var http_local = postman.getGlobalVariable(\"http\");\r",
+							"    var env_local = postman.getGlobalVariable(\"env\");\r",
+							"    var urlResource_local = postman.getGlobalVariable(\"urlResource\");\r",
+							"    var organizationId_local = postman.getGlobalVariable(\"organizationId\");\r",
+							"    var encSystem2Id_local = postman.getGlobalVariable(\"encSystem2Id\");\r",
+							"    var resourceSVGName_local = postman.getGlobalVariable(\"resourceSVGName\");\r",
+							"    var resourceDWGName_local = postman.getGlobalVariable(\"resourceDWGName\");\r",
+							"    var expectedSVGUrl = http_local + env_local + urlResource_local + \"/v1/resources/\" + organizationId_local + \"/\" + encSystem2Id_local + \"/\" + resourceSVGName_local + \".svg\";\r",
+							"    var expectedDWGUrl = http_local + env_local + urlResource_local + \"/v1/resources/\" + organizationId_local + \"/\" + encSystem2Id_local + \"/\" + resourceDWGName_local + \".dwg\";\r",
+							"    for (var i=0; i<jsonData.length; i++) {\r",
+							"        if (JSON.stringify(jsonData[i].url).includes(\"svg\")) {\r",
+							"            pm.expect(jsonData[i].url).to.eql(expectedSVGUrl);\r",
+							"        }else if (JSON.stringify(jsonData[i].url).includes(\"dwg\")) {\r",
+							"            pm.expect(jsonData[i].url).to.eql(expectedDWGUrl);\r",
+							"        }else {\r",
+							"            pm.expect(jsonData[i].url).to.eql(\"none of the returned URL matches!\");\r",
+							"        }\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{http}}{{env}}{{urlResource}}/v1/resources/{{organizationId}}/{{encSystem2Id}}",
+					"host": [
+						"{{http}}{{env}}{{urlResource}}"
+					],
+					"path": [
+						"v1",
+						"resources",
+						"{{organizationId}}",
+						"{{encSystem2Id}}"
+					]
+				},
+				"description": "Returns list of resource Urls under a EncSystem"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /v1/resources/{organizationId}/{encSystemId}/{resourceName} JPG",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0443f6fd-c467-4bbf-8bb0-5473d2097945",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code check\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{http}}{{env}}{{urlResource}}/v1/resources/{{organizationId}}/{{encSystem1Id}}/{{resourceJPGName}}.jpg",
+					"host": [
+						"{{http}}{{env}}{{urlResource}}"
+					],
+					"path": [
+						"v1",
+						"resources",
+						"{{organizationId}}",
+						"{{encSystem1Id}}",
+						"{{resourceJPGName}}.jpg"
+					]
+				},
+				"description": "Deletes a resource"
+			},
+			"response": []
+		},
+		{
+			"name": "GET /v1/resources/{organizationId}/{encSystemId}/{resourceName} JPG",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9fb7f74e-8360-4867-90b0-dbc09aa5e872",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code check\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"//Response body check\r",
+							"pm.test(\"Response body check\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.Message).to.eql(\"File not found.\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{http}}{{env}}{{urlResource}}/v1/resources/{{organizationId}}/{{encSystem1Id}}/{{resourceJPGName}}.jpg",
+					"host": [
+						"{{http}}{{env}}{{urlResource}}"
+					],
+					"path": [
+						"v1",
+						"resources",
+						"{{organizationId}}",
+						"{{encSystem1Id}}",
+						"{{resourceJPGName}}.jpg"
+					]
+				},
+				"description": "Returns a resource content"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /v1/resources/{organizationId}/{encSystemId} EncSystem2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0443f6fd-c467-4bbf-8bb0-5473d2097945",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code check\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{http}}{{env}}{{urlResource}}/v1/resources/{{organizationId}}/{{encSystem2Id}}",
+					"host": [
+						"{{http}}{{env}}{{urlResource}}"
+					],
+					"path": [
+						"v1",
+						"resources",
+						"{{organizationId}}",
+						"{{encSystem2Id}}"
+					]
+				},
+				"description": "Deletes a resource"
+			},
+			"response": []
+		},
+		{
+			"name": "GET /v1/resources/{organizationId}/{encSystemId}/{resourceName} SVG",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9fb7f74e-8360-4867-90b0-dbc09aa5e872",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code check\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"//Response body check\r",
+							"pm.test(\"Response body check\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.Message).to.eql(\"File not found.\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{http}}{{env}}{{urlResource}}/v1/resources/{{organizationId}}/{{encSystem2Id}}/{{resourceSVGName}}.svg",
+					"host": [
+						"{{http}}{{env}}{{urlResource}}"
+					],
+					"path": [
+						"v1",
+						"resources",
+						"{{organizationId}}",
+						"{{encSystem2Id}}",
+						"{{resourceSVGName}}.svg"
+					]
+				},
+				"description": "Returns a resource content"
+			},
+			"response": []
+		},
+		{
+			"name": "GET /v1/resources/{organizationId}/{encSystemId}/{resourceName} DWG",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9fb7f74e-8360-4867-90b0-dbc09aa5e872",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code check\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"//Response body check\r",
+							"pm.test(\"Response body check\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.Message).to.eql(\"File not found.\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{http}}{{env}}{{urlResource}}/v1/resources/{{organizationId}}/{{encSystem1Id}}/{{resourceDWGName}}.dwg",
+					"host": [
+						"{{http}}{{env}}{{urlResource}}"
+					],
+					"path": [
+						"v1",
+						"resources",
+						"{{organizationId}}",
+						"{{encSystem1Id}}",
+						"{{resourceDWGName}}.dwg"
+					]
+				},
+				"description": "Returns a resource content"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /v1/resources/{organizationId}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0443f6fd-c467-4bbf-8bb0-5473d2097945",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code check\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{http}}{{env}}{{urlResource}}/v1/resources/{{organizationId}}",
+					"host": [
+						"{{http}}{{env}}{{urlResource}}"
+					],
+					"path": [
+						"v1",
+						"resources",
+						"{{organizationId}}"
+					]
+				},
+				"description": "Deletes a resource"
+			},
+			"response": []
+		},
+		{
+			"name": "GET /v1/resources/{organizationId}/{encSystemId}/{resourceName} XML",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9fb7f74e-8360-4867-90b0-dbc09aa5e872",
+						"exec": [
+							"//Response code check\r",
+							"pm.test(\"Response code check\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"//Response body check\r",
+							"pm.test(\"Response body check\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.Message).to.eql(\"File not found.\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{http}}{{env}}{{urlResource}}/v1/resources/{{organizationId}}/{{encSystem1Id}}/{{resourceXMLName}}.xml",
+					"host": [
+						"{{http}}{{env}}{{urlResource}}"
+					],
+					"path": [
+						"v1",
+						"resources",
+						"{{organizationId}}",
+						"{{encSystem1Id}}",
+						"{{resourceXMLName}}.xml"
+					]
+				},
+				"description": "Returns a resource content"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{id_token}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "Encelium-Identity",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "dbbf2766-bf74-445c-9e93-f73e49aed14d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "c006520b-a3f5-432d-bce1-d784f1637548",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

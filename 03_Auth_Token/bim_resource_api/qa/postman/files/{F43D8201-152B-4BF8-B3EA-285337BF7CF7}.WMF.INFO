@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Id>{F43D8201-152B-4BF8-B3EA-285337BF7CF7}</Id>
+  <Name>G4</Name>
+  <Left>442</Left>
+  <Top>380</Top>
+  <WMFScale>17.000000441718161</WMFScale>
+  <Scale>
+    <Left>0</Left>
+    <Top>1086</Top>
+    <Right>94</Right>
+    <Bottom>1104</Bottom>
+    <ConversionScale>1</ConversionScale>
+  </Scale>
+</ImageInfo>

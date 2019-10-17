@@ -1,0 +1,66 @@
+@Library('jenkins-shared-libraries@dev') _
+
+pipeline {
+    agent any
+    stages {
+        stage ('Import YAML manifest') {
+            steps {
+                script {
+                    manifest = readYaml (file: 'build.yaml')
+					appVersion = manifest.app.version + '-' + "${env.BUILD_NUMBER}".padLeft(6,"0")
+					app_name = manifest.app.name
+					escaped_branch = escapedBranch()
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                bitbucketStatusNotify buildState: 'INPROGRESS', repoSlug: getRepoSlug(), commitId: "${env.GIT_COMMIT}"
+                dotNetBuild(                    
+                    manifest    : manifest,
+                    version     : appVersion        
+                )
+            }
+        }
+        stage('Unit Tests') {
+            steps {
+                dotNetUnitTest(
+                    directory   : manifest.app.solution_folder
+                )
+            }
+        }
+        stage('SonarQube') {
+            when {
+                branch "dev"
+            }
+            steps {
+                dotNetSonarQube(
+                    directory   : manifest.app.solution_folder,
+                    appName     : app_name,
+                    appVersion  : appVersion
+                )
+            }
+        }
+        stage('Docker Build') {
+            steps {
+                dockerDeploy(
+                    manifest        : manifest,
+                    escaped_branch  : escaped_branch,
+                    appVersion      : appVersion
+                )
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
+        }
+        success {
+            bitbucketStatusNotify buildState: 'SUCCESSFUL',  repoSlug: getRepoSlug(), commitId: "${env.GIT_COMMIT}"
+            triggerJob(getDeploymentName("${env.JOB_NAME}"))
+        }
+        failure {
+            bitbucketStatusNotify buildState: 'FAILED', repoSlug: getRepoSlug(), commitId: "${env.GIT_COMMIT}"
+        }
+    }
+}
